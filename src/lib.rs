@@ -7,14 +7,14 @@ use std::fmt;
 
 /// Errors produced by this component. Fail-fast: errors are returned, not panicked.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Sigmaos_mkinitcpio_archisoError {
+pub enum MkinitcpioArchisoError {
     /// The requested operation is not valid in the current state.
     InvalidState,
     /// Input failed validation.
     InvalidInput(String),
 }
 
-impl fmt::Display for Sigmaos_mkinitcpio_archisoError {
+impl fmt::Display for MkinitcpioArchisoError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InvalidState => write!(f, "invalid state"),
@@ -23,20 +23,20 @@ impl fmt::Display for Sigmaos_mkinitcpio_archisoError {
     }
 }
 
-impl std::error::Error for Sigmaos_mkinitcpio_archisoError {}
+impl std::error::Error for MkinitcpioArchisoError {}
 
 /// Core component type. Holds configuration; performs no I/O by default.
 #[derive(Debug, Clone, Default)]
-pub struct Sigmaos_mkinitcpio_archiso {
+pub struct MkinitcpioArchiso {
     name: String,
 }
 
-impl Sigmaos_mkinitcpio_archiso {
+impl MkinitcpioArchiso {
     /// Create a new component instance. Fails fast on empty names.
-    pub fn new(name: impl Into<String>) -> Result<Self, Sigmaos_mkinitcpio_archisoError> {
+    pub fn new(name: impl Into<String>) -> Result<Self, MkinitcpioArchisoError> {
         let name = name.into();
         if name.trim().is_empty() {
-            return Err(Sigmaos_mkinitcpio_archisoError::InvalidInput("name must not be empty".into()));
+            return Err(MkinitcpioArchisoError::InvalidInput("name must not be empty".into()));
         }
         Ok(Self { name })
     }
@@ -47,9 +47,9 @@ impl Sigmaos_mkinitcpio_archiso {
     }
 
     /// Perform the component's primary action. Returns a deterministic result.
-    pub fn run(&self) -> Result<String, Sigmaos_mkinitcpio_archisoError> {
+    pub fn run(&self) -> Result<String, MkinitcpioArchisoError> {
         if self.name.is_empty() {
-            return Err(Sigmaos_mkinitcpio_archisoError::InvalidState);
+            return Err(MkinitcpioArchisoError::InvalidState);
         }
         Ok(format!("{}: ok", self.name))
     }
@@ -62,18 +62,18 @@ mod tests {
     #[test]
     fn new_rejects_empty_name() {
         // Arrange / Act / Assert
-        assert!(matches!(Sigmaos_mkinitcpio_archiso::new("  "), Err(Sigmaos_mkinitcpio_archisoError::InvalidInput(_))));
+        assert!(matches!(MkinitcpioArchiso::new("  "), Err(MkinitcpioArchisoError::InvalidInput(_))));
     }
 
     #[test]
     fn run_returns_deterministic_result() {
-        let c = Sigmaos_mkinitcpio_archiso::new("test").unwrap();
+        let c = MkinitcpioArchiso::new("test").unwrap();
         assert_eq!(c.run().unwrap(), "test: ok");
     }
 
     #[test]
     fn name_is_accessible() {
-        let c = Sigmaos_mkinitcpio_archiso::new("abc").unwrap();
+        let c = MkinitcpioArchiso::new("abc").unwrap();
         assert_eq!(c.name(), "abc");
     }
 }
