@@ -1,0 +1,8 @@
+[package]
+name = "sigmaos-mkinitcpio-archiso"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Initramfs hooks for live ISO builds — SigmaOS component inspired by Arch Linux infrastructure."
+
+[dependencies]
