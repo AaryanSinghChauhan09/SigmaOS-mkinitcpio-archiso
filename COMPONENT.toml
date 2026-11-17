@@ -3,7 +3,7 @@ name = "SigmaOS-mkinitcpio-archiso"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "mkinitcpio-archiso component"
+description = "SigmaOS mkinitcpio-archiso component (Arch Linux inspired)"
 upstream = []
 
 [contract]
