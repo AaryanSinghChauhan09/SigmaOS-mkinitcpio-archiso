@@ -1,16 +1,16 @@
 [component]
 name = "SigmaOS-mkinitcpio-archiso"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
 description = "SigmaOS mkinitcpio-archiso component (Arch Linux inspired)"
-upstream = []
+upstream = ["https://github.com/archlinux/mkinitcpio-archiso"]
 
 [contract]
-provides = ["component"]
+provides = ["mkinitcpio-hooks", "initramfs-planner", "iso-boot-hooks"]
 depends_on = []
 
 [maturity]
 status = "Implemented"
-test_evidence = "Compiles and passes AAA unit tests"
+test_evidence = "cargo test: 10 tests pass (hook order, pxe deps, install plans, conf parsing)"
 next_milestone = "Hardware and runtime integration"
